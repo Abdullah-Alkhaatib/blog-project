@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const joi = require('joi'); // validation
 
 // User Schema
 const userSchema = new mongoose.Schema({
@@ -8,7 +9,7 @@ const userSchema = new mongoose.Schema({
     profilePhoto: {
         type: Object,
         default: {
-            url: "https://media.istockphoto.com/id/1337144146/vector/default-avatar-profile-icon-vector.jpg?s=612x612&w=0&k=20&c=BIbFwuv7FxTWvh5S3vB6bkT0Qv8Vn8N5Ffseq84ClGI=",
+            url: "https://static.vecteezy.com/system/resources/previews/036/280/650/non_2x/default-avatar-profile-icon-social-media-user-image-gray-avatar-icon-blank-profile-silhouette-illustration-vector.jpg",
             publicId: null,
         }
     },
@@ -19,6 +20,18 @@ const userSchema = new mongoose.Schema({
 
 // User Model
 const User = mongoose.model("User", userSchema);
+
+// validate register User
+function validateRegisterUser(user){
+    const schema = joi.object({
+        username: joi.string().trim().min(2).max(100).required(),
+        email: joi.string().trim().min(5).max(100).required().email(),
+        password: joi.string().trim().min(8).required(),
+    });
+    return schema.validate(user);
+}
+
 module.exports = {
-    User
+    User,
+    validateRegisterUser,
 };

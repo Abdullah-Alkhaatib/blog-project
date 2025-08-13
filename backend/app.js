@@ -11,6 +11,10 @@ const app = express();
 // Middleware
 app.use(express.json()); // // لتحويل بيانات JSON القادمة في الطلب إلى كائنات JavaScript داخل req.body
 
+// Routes
+const authRoute = require("./routes/authRoute");
+app.use("/api/auth", authRoute);
+
 // Running the server
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {
