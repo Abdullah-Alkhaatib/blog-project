@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 
-// verify Token
+// verify token = التحقق من صحة الـ JWT (التوقيع، الصلاحية، وعدم التلاعب) قبل السماح بالوصول
 function verifyToken(req, res, next){
     const authToken = req.headers.authorization;
     if(authToken){

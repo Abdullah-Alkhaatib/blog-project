@@ -76,9 +76,29 @@ const getUsersCountCtrl = asyncHandler(async (req, res) => {
     res.status(200).json(count);
 });
 
+
+// npm i multer cloudinary
+/**--------------------------------------------
+ * @desc    Profile photo upload
+ * @route   /api/users/profile/profile-photo-upload
+ * @method  POST
+ * @access  private (only logged in user)
+ ---------------------------------------------*/
+const profilePhotoUploadCtrl = asyncHandler(async(req, res) => {
+    // console.log(req.file); // req.file يحتوي على معلومات الصورة المرفوعة
+
+    if(!req.file){ //  إذا لم يتم رفع أي ملف
+        return res.status(400).json({message: "No file uploaded"});
+    }
+    
+    // تحديث صورة الملف الشخصي للمستخدم
+    res.status(200).json({message: "Your profile photo uploaded successfully"});
+})
+
 module.exports = {
     getAllUsersCtrl,
     getUserProfileCtrl,
     updateUserProfileCtrl,
-    getUsersCountCtrl
+    getUsersCountCtrl,
+    profilePhotoUploadCtrl
 }
