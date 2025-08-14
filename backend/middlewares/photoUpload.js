@@ -5,7 +5,7 @@ const multer = require("multer"); // لتحميل الملفات
 const photoStorage = multer.diskStorage({
     destination: function (req, file, cb){ // تحديد مكان حفظ الصور
         // console.log("📂 __dirname:", __dirname); // راح يطبع مسار الملف الحالي
-        cb(null, path.join(__dirname, "../../images")); // __dirname يعني المسار الحالي للملف
+        cb(null, path.join(__dirname, "../images")); // __dirname يعني المسار الحالي للملف
 
     },
     filename: function (req, file, cb){ // تحديد اسم الصورة
