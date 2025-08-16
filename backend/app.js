@@ -14,9 +14,11 @@ app.use(express.json()); // // لتحويل بيانات JSON القادمة ف�
 
 // Routes
 const authRoute = require("./routes/authRoute");
-const usersRoute = require("./routes/usersRoute")
+const usersRoute = require("./routes/usersRoute");
+const postsRoute = require("./routes/postsRoute");
 app.use("/api/auth", authRoute);
 app.use("/api/users", usersRoute);
+app.use("/api/posts", postsRoute);
 
 // Running the server
 const PORT = process.env.PORT || 8000;
