@@ -17,7 +17,18 @@ const userSchema = new mongoose.Schema({
     bio: { type: String },
     isAdmin: { type: Boolean, default: false },
     isAccountVerified: { type: Boolean, default: false },
-}, { timestamps: true } );
+}, { 
+    timestamps: true,
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true }
+});
+
+// Populate posts that belongs to this user when he/she get his/her profile
+userSchema.virtual("posts", {
+    ref: "Post",
+    foreignField: "user", // الحقل في نموذج البوستات الذي يشير إلى المستخدم
+    localField: "_id",
+})
 
 // Generate Auth Token
 userSchema.methods.generateAuthToken = function (){

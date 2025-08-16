@@ -16,7 +16,7 @@ const getAllUsersCtrl = asyncHandler(async (req, res) => {
     // console.log(req.headers.authorization);
     // console.log(req.headers.authorization.split(" ")[1]);
 
-    const users = await User.find().select("-password");
+    const users = await User.find().select("-password").populate("posts");
     res.status(200).json(users);
 });
 
@@ -28,7 +28,7 @@ const getAllUsersCtrl = asyncHandler(async (req, res) => {
  * @access  public
  ---------------------------------------------*/
 const getUserProfileCtrl = asyncHandler(async (req, res) => {
-    const user = await User.findById(req.params.id).select("-password"); //عشان ما نرجع الباسورد
+    const user = await User.findById(req.params.id).select("-password").populate("posts");
     if(!user){
         return res.status(404).json({message: "User not found"});
     }

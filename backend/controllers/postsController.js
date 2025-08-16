@@ -174,42 +174,82 @@ const updatePostCtrl = asyncHandler(async (req, res) => {
 
 
 /**--------------------------------------------
- * @desc    Update post
- * @route   /api/posts/:id
+ * @desc    Update post image
+ * @route   /api/posts/upload-image/:id
  * @method  PUT
  * @access  private (only owner of the post)
  ---------------------------------------------*/
-// const updatePostCtrl = asyncHandler(async (req, res) => {
-//     // 1. Validation
-//     const {error} = validateUpdatePost(req.body);
-//     if(error){
-//         return res.status(400).json({message: error.details[0].message});
-//     }
+const updatePostImageCtrl = asyncHandler(async (req, res) => {
+    // 1. Validation
+    if(!req.file){ // اذا ما في صورة جايه من العميل
+        return res.status(400).json({message: "No image provided"});
+    }
 
-//     // 2. Get the post from DB and check if post exist
-//     const post = await Post.findById(req.params.id);
-//     if(!post){
-//         return res.status(404).json({message: "Post not found"});
-//     }
+    // 2. Get the post from DB and check if post exist
+    const post = await Post.findById(req.params.id);
+    if(!post){
+        return res.status(404).json({message: "Post not found"});
+    }
 
-//     // 3. check if this post belong to logged in user
-//     if(req.user.id !== post.user.toString()){ // اذا ما كان هذا البوست ل هذا اليوزر
-//         return res.status(403).json({message: "Access denied, you are not allowed to update this post"});
-//     }
+    // 3. check if this post belong to logged in user
+    if(req.user.id !== post.user.toString()){ // اذا ما كان هذا البوست ل هذا اليوزر
+        return res.status(403).json({message: "Access denied, you are not allowed to update this post"});
+    }
 
-//     // 4. update post 
-//     const updatedPost = await Post.findByIdAndUpdate(req.params.id, {
-//         $set: { // تحديث الحقول
-//             title: req.body.title,
-//             description: req.body.description,
-//             category: req.body.category
-//         }
-//     }, {new: true})
-//        .populate("user", ["-password"]); // لإرجاع البوست المحدث
+    // 4. delete the old image
+    await cloudinaryRemoveImage(post.image.publicId); // حذف الصورة القديمة من كلاوديناري
 
-//     // 5. Send response to the client
-//     res.status(200).json(updatedPost);
-// });
+    // 5. Upload new photo
+    const imagePath = path.join(__dirname, `../images/${req.file.filename}`); // بعمل مسار للصورة المرفوعة
+    const result = await cloudinaryUploadImage(imagePath); // رفع الصورة الجديدة على كلاوديناري
+
+    // 6. update the image field in the DB
+    const updatedPost = await Post.findByIdAndUpdate(req.params.id, {
+        $set: { // تحديث الحقول
+            image: {
+                url: result.secure_url,
+                publicId: result.public_id,
+            }
+        }
+    }, {new: true});
+
+       // 7. send response to client
+       res.status(200).json(updatedPost);
+
+       // 8. delete image from the server
+       fs.unlinkSync(imagePath); // حذف الصورة من السيرفر
+});
+
+
+/**--------------------------------------------
+ * @desc    Toggle like
+ * @route   /api/posts/like/:id
+ * @method  PUT
+ * @access  private (only logged in user)
+ ---------------------------------------------*/
+ const toggleLikeCtrl = asyncHandler(async (req, res) => {
+    const loggedInUser = req.user.id;
+    const {id: postId} = req.params; // نفسه id
+
+    let post = await Post.findById(postId);
+    if(!post){
+        return res.status(404).json({message: "Post not found"});
+    }
+
+    // checked if user already liked the post
+    const isPostAlreadyLiked = post.likes.find((user) => user.toString() === loggedInUser);
+    if(isPostAlreadyLiked){ // اذا كان اليوزر عمل لايك على البوست
+        post = await Post.findByIdAndUpdate(postId, {
+            $pull: {likes: loggedInUser} // ازالة اليوزر من قائمة اللايكات, pull بشتغل مع الاري
+        }, {new: true})
+    } else{
+        post = await Post.findByIdAndUpdate(postId, {
+            $push: {likes: loggedInUser} // اضافة اليوزر لقائمة اللايكات
+        }, {new: true})
+    }
+
+    res.status(200).json(post);
+ })
 
  module.exports = {
     createPostCtrl,
@@ -217,5 +257,7 @@ const updatePostCtrl = asyncHandler(async (req, res) => {
     getSinglePostCtrl,
     getCountPostCtrl,
     deletePostCtrl,
-    updatePostCtrl
+    updatePostCtrl,
+    updatePostImageCtrl,
+    toggleLikeCtrl
  }
