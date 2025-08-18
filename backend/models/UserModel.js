@@ -23,11 +23,11 @@ const userSchema = new mongoose.Schema({
     toObject: { virtuals: true }
 });
 
-// Populate posts that belongs to this user when he/she get his/her profile
+// Populate posts that belongs to this user when he/she get his/her profile (virtual in mongoose)
 userSchema.virtual("posts", {
     ref: "Post",
     foreignField: "user", // الحقل في نموذج البوستات الذي يشير إلى المستخدم
-    localField: "_id",
+    localField: "_id", // الحقل في نموذج المستخدم الذي يشير إلى البوستات
 })
 
 // Generate Auth Token
