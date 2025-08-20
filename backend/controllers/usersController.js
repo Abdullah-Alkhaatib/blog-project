@@ -3,7 +3,9 @@ const {User, validateUpdateUser} = require("../models/UserModel");
 const bcrypt = require('bcryptjs');
 const path = require("path");
 const fs = require("fs"); // fs => file system
-const { cloudinaryUploadImage, cloudinaryRemoveImage } = require("../utils/cloudinary");
+const { cloudinaryUploadImage, cloudinaryRemoveImage, cloudinaryRemoveMultipleImage } = require("../utils/cloudinary");
+const {Comment} = require("../models/CommentModel");
+const {Post} = require("../models/PostModel");
 
 
 /**--------------------------------------------
@@ -139,13 +141,22 @@ const deleteUserProfileCtrl = asyncHandler(async (req, res) => {
     }
 
     // @TODO - 2. Get all posts from DB
+    const posts = await Post.find({user: user._id}); // استرجاع جميع المشاركات التي تخص هذا المستخدم
+
     // @TODO - 3. Get the public ids from the posts
+    const publicIds = posts?.map((post) => post.image.publicId); // ? => اذا كانت null او undefined ما رح تشتغل
+
     // @TODO - 4. Delete all posts image from cloudinary that belong to this user
+    if(publicIds?.length > 0){
+        await cloudinaryRemoveMultipleImage(publicIds);
+    }
 
     // 5. Delete the profile picture from cloudinary
     await cloudinaryRemoveImage(user.profilePhoto.publicId);
 
     // @TODO - 6. Delete user posts and comments
+    await Post.deleteMany({user: req.params.id}); // حذف جميع المشاركات التي تخص هذا المستخدم
+    await Comment.deleteMany({user: req.params.id}); // حذف جميع التعليقات التي تخص هذا المستخدم
 
     // 7. Delete the user himself
     await User.findByIdAndDelete(req.params.id);

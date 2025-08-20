@@ -20,8 +20,18 @@ const postSchema = new mongoose.Schema({
             ref: "User" // بقدر اجيب معلومات اليوزر اللي ب UserModel
         }
     ]
-}, { timestamps: true } );
+}, { 
+    timestamps: true, 
+    toJSON: {virtuals: true}, // عشان اقدر استخدم الفيرتشوال في ال API
+    toObject: {virtuals: true} 
+});
 
+// Populate comment for this post
+postSchema.virtual( "comments", { // عند الحاجه افتراضي مو حقيقي
+    ref: "Comment", // Model name
+    foreignField: "postId", // من Comment Model
+    localField: "_id" 
+})
 
 // Post Model
 const Post = mongoose.model("Post", postSchema);

@@ -4,6 +4,7 @@ const asyncHandler = require("express-async-handler"); // Middleware for handlin
 const {Post, validateCreatePost} = require("../models/PostModel");
 const {cloudinaryUploadImage, cloudinaryRemoveImage} = require("../utils/cloudinary"); // تعميل رفع الصور على كلاوديناري
 const {validateUpdatePost} = require("../models/PostModel");
+const {Comment} = require("../models/CommentModel");
 
 /**--------------------------------------------
  * @desc    Create new post
@@ -86,7 +87,9 @@ const {validateUpdatePost} = require("../models/PostModel");
  ---------------------------------------------*/
  const getSinglePostCtrl = asyncHandler(async (req, res) => {
     const { id } = req.params;
-    const post = await Post.findById(id).populate("user", ["-password"]); // استرجاع البوست بناءً على ID الخاص به
+    const post = await Post.findById(id)
+    .populate("user", ["-password"]) // استرجاع البوست بناءً على ID الخاص به
+    .populate("comments");
     if(!post){
         return res.status(404).json({message: "Post not found"});
     }
@@ -125,6 +128,7 @@ const {validateUpdatePost} = require("../models/PostModel");
         await cloudinaryRemoveImage(post.image.publicId); // حذف الصورة من كلاوديناري
 
         // @TODO - Delete all comments that belong to this post
+        await Comment.deleteMany({postId: post._id}); // حذف جميع التعليقات التي تنتمي لهذا البوست
 
         res.status(200).json({message: "Post has been deleted successfully", postId: post._id});
     } else{
