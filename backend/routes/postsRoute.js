@@ -9,7 +9,7 @@ const {createPostCtrl, getAllPostsCtrl, getSinglePostCtrl, getCountPostCtrl, del
 //  /api/posts
 router.post("/",verifyToken, photoUpload.single("image"), createPostCtrl);
 router.get("/", getAllPostsCtrl);
-//  /api/posts/count
+//  /api/posts/count    
 router.get("/count", getCountPostCtrl);
 //  /api/posts/:id
 router.get("/:id", validateObjectId, getSinglePostCtrl);

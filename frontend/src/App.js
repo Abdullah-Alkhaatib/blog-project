@@ -7,6 +7,7 @@ import Login from "./pages/forms/Login";
 import Register from "./pages/forms/Regiser";
 import PostPage from "./pages/posts-page/PostPage";
 import Footer from "./components/footer/Footer";
+import PostDetails from "./pages/post-details/PostDetails";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/posts" element={<PostPage />} />
         <Route path="/posts/create-post" element={<CreatePost />} />
+        <Route path="/posts/details/:id" element={<PostDetails />} />
         <Route path="/admin-dashboard" element={<AdminDashBoard />} />
       </Routes>
       <Footer />

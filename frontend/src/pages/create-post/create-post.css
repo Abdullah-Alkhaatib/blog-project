@@ -52,3 +52,13 @@
     padding: 10px;
     margin-top: 15px;
 }
+
+
+/* =====MEDIA QUERIES===== */
+@media (max-width: 820px) {
+    .create-post-form {
+        width: 100%;
+    }
+}
+
+/* ===MEDIA QUERIES=== */
