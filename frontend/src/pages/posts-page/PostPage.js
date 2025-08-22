@@ -1,7 +1,17 @@
+import "./posts-page.css"
+import PostList from "../../components/posts/PostList"
+import SideBar from "../../components/sidebar/SideBar"
+import {posts, categories} from "../../dummyData"
+import Pagination from "../../components/pagination/Pagination"
+
 export default function PostPage(){
     return(
-        <div>
-            <h1>Posts page</h1>
-        </div>
+        <>
+            <section className="posts-page">
+                <PostList posts={posts} />
+                <SideBar categories={categories} />
+            </section>
+            <Pagination />
+        </>
     )
 }
