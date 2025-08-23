@@ -1,0 +1,57 @@
+.admin-dashboard{
+    display: flex;
+    overflow: hidden; 
+    width: 100%;
+    min-height: calc(100vh - 130px);
+}
+
+/* =====AdminSidebar===== */
+.admin-sidebar{
+    flex: 2;
+    /* background-color: red; */
+    border-right: 1px solid var(--gray-color);
+    padding: 20px;
+}
+
+.admin-sidebar-title{
+    font-size: 24px;
+    font-weight: bold;
+    color: var(--primary-color);
+    margin-bottom: 30px;
+    display: block;
+}
+
+.admin-sidebar-title i{
+    margin-right: 5px;
+    color: var(--green-color);
+}
+
+.admin-dashboard-list{
+    padding: 5px;
+}
+
+.admin-sidebar-link{
+    color: var(--secondary-color);
+    font-size: 21px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    cursor: pointer;
+    display: block;
+}
+
+.admin-sidebar-link i{
+    margin-right: 5px;
+    font-size: 24px;
+}
+
+/* ===AdminSidebar=== */
+
+
+
+/* =====AdminMain===== */
+.admin-main{
+    flex: 10;
+    padding: 10px;
+    /* background-color: blue; */
+}
+/* ===AdminMain=== */

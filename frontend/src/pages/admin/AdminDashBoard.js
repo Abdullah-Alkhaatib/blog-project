@@ -1,7 +1,14 @@
+import "./admin.css"
+import AdminSidebar from "./AdminSidebar"
+import AdminMain from "./AdminMain"
+
 export default function AdminDashBoard(){
     return(
         <div>
-            <h1>Admin Dashboard</h1>
+            <section className="admin-dashboard">
+                <AdminSidebar />
+                <AdminMain />
+            </section>
         </div>
     )
 }
