@@ -17,6 +17,7 @@
     height: 120px;
     position: relative;
     text-align: center;
+    cursor: pointer;
 }
 
 .profile-image{
@@ -109,6 +110,36 @@
     font-size: 18px;
     font-weight: 500;
 }
+
+
+/* المودال تبع صورة البروفايل */
+.image-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.image-modal {
+  width: 400px;   /* خلي العرض ثابت */
+  height: 400px;  /* نفس الطول */
+  object-fit: cover; /* يضمن ان الصورة تتقص صح */
+  border-radius: 50%; /* يخليها دائرة */
+  border: 3px solid var(--white-color);
+  box-shadow: 0 0 20px #000;
+  /* animation: zoomIn 0.3s ease; */
+}
+
+/* @keyframes zoomIn {
+  from { transform: scale(0.7); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+} */
 
 
 

@@ -16,6 +16,7 @@ export default function Profile() {
 
     const [file, setFile] = useState(null);
     const [updateProfile, setUpdateProfile] = useState(false);
+    const [isImageOpen, setIsImageOpen] = useState(false); // ⬅️ للتحكم بالصورة الكبيرة
 
     const { id } = useParams();
     useEffect(() => {
@@ -65,7 +66,8 @@ export default function Profile() {
                     <img 
                     src={file ? URL.createObjectURL(file) : profile?.profilePhoto.url} 
                     alt="Profile"
-                    className="profile-image" 
+                    className="profile-image"
+                    onClick={() => setIsImageOpen(true)} // ⬅️ فتح الصورة الكبيرة
                     />
 
                     <form onSubmit={formSubmitHandler}>
@@ -116,6 +118,17 @@ export default function Profile() {
 
             {updateProfile && (
                 <UpdateProfileModal profile={profile} setUpdateProfile={setUpdateProfile} />
+            )}
+
+             {/* ✅ المودال تبع الصورة */}
+            {isImageOpen && (
+                <div className="image-modal-overlay" onClick={() => setIsImageOpen(false)}>
+                    <img 
+                        src={file ? URL.createObjectURL(file) : profile?.profilePhoto.url} 
+                        alt="Profile Large" 
+                        className="image-modal" 
+                    />
+                </div>
             )}
 
         </section>

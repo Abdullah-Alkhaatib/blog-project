@@ -8,6 +8,7 @@ export default function HeaderRight({toggle, setToggle}) {
     const {user} = useSelector(state => state.auth); // Get user from auth state
 
     const [dropdownOpen, setDropdownOpen] = useState(false);
+    const [isImageOpen, setIsImageOpen] = useState(false); // ⬅️ للتحكم بالصورة الكبيرة
 
     const dispatch = useDispatch();
 
@@ -27,6 +28,7 @@ export default function HeaderRight({toggle, setToggle}) {
                         <img src={user?.profilePhoto.url}
                         alt="User"
                         className="header-right-user-photo"
+                        onClick={() => setIsImageOpen(true)}
                         />
 
                         {dropdownOpen && (
@@ -46,6 +48,17 @@ export default function HeaderRight({toggle, setToggle}) {
                         )}
 
                     </div>
+
+                    {/* ✅ المودال لعرض الصورة الكبيرة */}
+                    {isImageOpen && (
+                        <div className="image-modal-overlay" onClick={() => setIsImageOpen(false)}>
+                            <img 
+                                src={user?.profilePhoto.url} 
+                                alt="Profile Large" 
+                                className="image-modal" 
+                            />
+                        </div>
+                    )}
                 </> 
                 ) : (
                     <>
