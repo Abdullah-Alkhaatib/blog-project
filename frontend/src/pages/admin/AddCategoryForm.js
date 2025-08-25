@@ -25,7 +25,7 @@ export default function AddCategoryForm(){
                     <input 
                     type="text" 
                     id="title" 
-                    placeholder="Enter category title" 
+                    placeholder="Enter category title"
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
                     // required 

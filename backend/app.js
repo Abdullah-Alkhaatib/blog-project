@@ -1,6 +1,7 @@
 const express = require('express');
 const connectToDB = require("./config/connectToDB");
 const {errorHandler, notFound} = require("./middlewares/error");
+const cors = require("cors");
 require("dotenv").config(); // Load environment variables from .env file
 
 // Connection to DB
@@ -12,6 +13,13 @@ const app = express();
 // Middleware
 app.use(express.json()); // // لتحويل بيانات JSON القادمة في الطلب إلى كائنات JavaScript داخل req.body
 // app.use(express.urlencoded({ extended: true }));
+
+// Cors policy
+app.use(cors({
+    origin: "http://localhost:3000", // Replace with your frontend URL
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true // بتسمح بإرسال الكوكيز مع الطلبات
+}));
 
 // Routes
 const authRoute = require("./routes/authRoute");

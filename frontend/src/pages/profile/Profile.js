@@ -5,20 +5,35 @@ import "./profile.css";
 import { toast, ToastContainer } from "react-toastify";
 import swal from "sweetalert";
 import UpdateProfileModal from "../posts-page/UpdateProfileModal";
+import {useDispatch, useSelector} from "react-redux";
+import { getUserProfile, uploadProfilePhoto } from "../../redux/apiCalls/profileApiCall";
+import { useParams } from "react-router-dom";
 
 export default function Profile() {
+
+    const dispatch = useDispatch();
+    const {profile} = useSelector(state => state.profile);
 
     const [file, setFile] = useState(null);
     const [updateProfile, setUpdateProfile] = useState(false);
 
+    const { id } = useParams();
     useEffect(() => {
+        dispatch(getUserProfile(id))
         window.scrollTo(0, 0);
-    }, []);
+    }, [dispatch, id]);
 
     // Form submit handler
     const formSubmitHandler = (e) => {
         e.preventDefault();
         if(!file) return toast.warning("There is no file!");
+
+        console.log("image uploaded");
+
+        const formData = new FormData();
+        formData.append("image", file);
+
+        dispatch(uploadProfilePhoto(formData));
     };
 
     // Delete account handler
@@ -48,13 +63,13 @@ export default function Profile() {
                 
                 <div className="profile-image-wrapper">
                     <img 
-                    src={file ? URL.createObjectURL(file) : "/images/user-avatar.png"} 
+                    src={file ? URL.createObjectURL(file) : profile?.profilePhoto.url} 
                     alt="Profile"
                     className="profile-image" 
                     />
 
                     <form onSubmit={formSubmitHandler}>
-                        <ToastContainer />
+                        <ToastContainer autoClose={3000} position="top-center" />
                         <abbr title="choose profile photo">
                             <label 
                             htmlFor="file" 
@@ -73,12 +88,14 @@ export default function Profile() {
 
                 </div>
 
-                <h1 className="profile-username">Abdullah Mohammad</h1>
-                <p className="profile-bio">hello my name is Abdullah Mohammad, i am a web developer.</p>
+                <h1 className="profile-username">{profile?.username}</h1>
+                <p className="profile-bio">{profile?.bio}</p>
 
                 <div className="user-date-joined">
                     <strong>Date Joined:</strong>
-                    <span>8/23/2025</span>
+                    <span>
+                        {new Date(profile?.createdAt).toLocaleDateString()} {/* بعمل فورمات للتاريخ */}
+                    </span>
                 </div>
 
                 <button onClick={() => setUpdateProfile(true)} className="profile-update-btn">
@@ -89,7 +106,7 @@ export default function Profile() {
             </div>
 
             <div className="profile-posts-list">
-                <h2 className="profile-posts-list-title">Abdullah Posts</h2>
+                <h2 className="profile-posts-list-title">{profile?.username} Posts</h2>
                 <PostList posts={posts} />
             </div>
 
@@ -97,7 +114,9 @@ export default function Profile() {
                 Delete Your Account
             </button>
 
-            {updateProfile && (<UpdateProfileModal setUpdateProfile={setUpdateProfile} />)}
+            {updateProfile && (
+                <UpdateProfileModal profile={profile} setUpdateProfile={setUpdateProfile} />
+            )}
 
         </section>
     );

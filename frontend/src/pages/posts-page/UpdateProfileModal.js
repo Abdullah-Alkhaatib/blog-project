@@ -1,15 +1,14 @@
 import "./updateProfileModal.css";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { updateProfile } from "../../redux/apiCalls/profileApiCall";
 
-const user = {
-    username: "Abdullah Mohammad",
-    bio: "Hello my name is abdullah"
-}
+export default function UpdateProfileModal({setUpdateProfile, profile}) {
 
-export default function UpdateProfileModal({setUpdateProfile}) {
+    const dispatch = useDispatch();
 
-    const [username, setUsername] = useState(user.username);
-    const [bio, setBio] = useState(user.bio);
+    const [username, setUsername] = useState(profile.username);
+    const [bio, setBio] = useState(profile.bio);
     const [password, setPassword] = useState("");
 
     // Form submit handler
@@ -22,7 +21,10 @@ export default function UpdateProfileModal({setUpdateProfile}) {
             updatedUser.password = password; // اضافة كلمة المرور
         }
 
-        console.log(updatedUser);
+        // console.log(updatedUser);
+
+        dispatch(updateProfile(profile?._id, updatedUser));
+        setUpdateProfile(false);
     }; 
 
     return (

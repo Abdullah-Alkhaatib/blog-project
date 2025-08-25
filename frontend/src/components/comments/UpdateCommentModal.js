@@ -1,6 +1,6 @@
 import "./update-comment.css";
 import { useState } from "react";
-import {toast, ToastContainer} from "react-toastify";
+import {toast} from "react-toastify";
 
 export default function UpdateCommentModal({setUpdateComment}) {
 
@@ -25,6 +25,7 @@ export default function UpdateCommentModal({setUpdateComment}) {
                 <input 
                 type="text" 
                 className="update-comment-input" 
+                placeholder="Edit your comment"
                 value={text}
                 onChange={(e) => setText(e.target.value)}
                 />

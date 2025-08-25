@@ -1,6 +1,6 @@
 import "./update-post.css";
 import { useState } from "react";
-import {toast, ToastContainer} from "react-toastify";
+import {toast} from "react-toastify";
 
 export default function UpdatePostModal({setUpdatePost, post}) {
 
@@ -29,7 +29,8 @@ export default function UpdatePostModal({setUpdatePost, post}) {
                 <h1 className="update-post-title">Update Post</h1>
                 <input 
                 type="text" 
-                className="update-post-input" 
+                className="update-post-input"
+                placeholder="Enter post title"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 />
@@ -45,6 +46,7 @@ export default function UpdatePostModal({setUpdatePost, post}) {
                 <textarea 
                 className="update-post-textarea"
                 rows="5"
+                placeholder="Enter post description"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 >

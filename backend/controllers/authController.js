@@ -81,6 +81,7 @@ const {User, validateRegisterUser, validateLoginUser} = require('../models/UserM
         username: user.username,
         isAdmin: user.isAdmin,
         profilePhoto: user.profilePhoto,
+        bio: user.bio,
         token,
     });
  });
