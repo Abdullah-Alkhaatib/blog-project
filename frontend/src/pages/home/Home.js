@@ -1,10 +1,22 @@
 import PostList from "../../components/posts/PostList";
 import "./home.css";
-import {posts, categories} from "../../dummyData";
+import {categories} from "../../dummyData";
 import SideBar from "../../components/sidebar/SideBar";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { fetchPosts } from "../../redux/apiCalls/postApiCall";
 
 export default function Home(){
+
+    const dispatch = useDispatch();
+    const {posts} = useSelector((state) => state.post);
+
+    // Fetch posts when the component mounts
+    useEffect(() => {
+        dispatch(fetchPosts(1));
+    }, [dispatch]);
+
     return(
         <section className="home">
 
@@ -16,7 +28,7 @@ export default function Home(){
 
             <div className="home-latest-post">Latest Posts</div>
             <div className="home-container">
-                <PostList posts={posts.slice(0, 3)} /> {/* عرض أحدث 3 منشورات */}
+                <PostList posts={posts} /> {/* عرض أحدث  منشورات */}
                 <SideBar categories={categories} />
             </div>
 

@@ -1,7 +1,7 @@
 import {Link, useNavigate} from "react-router-dom"
 import "./form.css"
 import { useState } from "react";
-import {toast, ToastContainer} from "react-toastify";
+import {toast} from "react-toastify";
 import {useDispatch, useSelector} from "react-redux";
 import { registerUser } from "../../redux/apiCalls/authApiCall";
 import swal from "sweetalert";
@@ -48,7 +48,7 @@ export default function Register(){
 
             <h1 className="form-title">Create new account</h1>
 
-            <ToastContainer position="top-right" autoClose={3000} />
+            {/* <ToastContainer position="top-right" autoClose={3000} /> */}
 
             <form className="form" onSubmit={formSubmitHandler}>
                 <div className="form-group">

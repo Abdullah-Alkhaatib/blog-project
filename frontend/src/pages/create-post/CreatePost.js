@@ -1,8 +1,16 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./create-post.css";
-import {toast, ToastContainer} from "react-toastify"; // index.js
+import {toast} from "react-toastify"; // index.js
+import {useDispatch, useSelector} from "react-redux";
+import {useNavigate} from "react-router-dom";
+import { createNewPost } from "../../redux/apiCalls/postApiCall";
+import {RotatingLines} from "react-loader-spinner"; // npm install react-loader-spinner --save
 
 export default function CreatePost(){
+
+    const dispatch = useDispatch();
+    const {isPostCreated, loading} = useSelector((state) => state.post);
+
     const [title, setTitle] = useState("");
     const [category, setCategory] = useState("");
     const [description, setDescription] = useState("");
@@ -26,11 +34,20 @@ export default function CreatePost(){
         formData.append("image", file); // image => من الباكند هيك انا مسميها
 
         // @TODO - send form data to server
+        dispatch(createNewPost(formData));
     }
+
+    const navigate = useNavigate();
+    useEffect(() => {
+        if(isPostCreated){
+            toast.success("Post created successfully");
+            navigate("/"); // Redirect to home page
+        }        
+    }, [isPostCreated, navigate])
 
     return(
         <section className="create-post">
-            <ToastContainer position="top-right" autoClose={3000} theme="light" />
+            {/* <ToastContainer position="top-right" autoClose={3000} theme="light" /> */}
             <h1 className="create-post-title">
                 Create New Post
             </h1>
@@ -68,7 +85,19 @@ export default function CreatePost(){
                 onChange={(e) => setFile(e.target.files[0])}
                 />
 
-                <button type="submit" className="create-post-btn">Create</button>
+                <button type="submit" className="create-post-btn">
+                    {
+                        loading ? (
+                            <RotatingLines
+                                strokeColor="white"
+                                strokeWidth="5"
+                                animationDuration="0.75"
+                                width="40"
+                                visible={true}
+                            />
+                        ) : "Create"
+                    }
+                </button>
 
             </form>
         </section>

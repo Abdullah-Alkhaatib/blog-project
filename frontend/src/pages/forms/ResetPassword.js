@@ -1,6 +1,6 @@
 import "./form.css"
 import { useState } from "react";
-import {toast, ToastContainer} from "react-toastify";
+import {toast} from "react-toastify";
 
 export default function ResetPassword(){
 
@@ -20,7 +20,7 @@ export default function ResetPassword(){
 
             <h1 className="form-title">Reset your password</h1>
 
-            <ToastContainer position="top-right" autoClose={3000} />
+            {/* <ToastContainer position="top-right" autoClose={3000} /> */}
 
             <form className="form" onSubmit={formSubmitHandler}>
 

@@ -17,7 +17,7 @@ import CommentsTable from "./pages/admin/CommentsTable";
 import ForgotPassword from "./pages/forms/ForgotPassword";
 import ResetPassword from "./pages/forms/ResetPassword";
 import NotFound from "./pages/not-found/NotFound";
-// import {toast, ToastContainer} from "react-toastify";
+import { ToastContainer} from "react-toastify";
 import { useSelector } from "react-redux";
 
 function App() {
@@ -27,7 +27,9 @@ function App() {
   return (
     <BrowserRouter>
       <Header />
-      {/* <ToastContainer theme="light" position="top-right" /> */}
+
+      <ToastContainer theme="light" position="top-center" autoClose={3000} />
+
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={!user ? <Login /> : <Navigate to="/" />} />

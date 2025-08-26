@@ -1,8 +1,12 @@
 import "./update-post.css";
 import { useState } from "react";
 import {toast} from "react-toastify";
+import {useDispatch} from "react-redux";
+import { updatePost } from "../../redux/apiCalls/postApiCall";
 
 export default function UpdatePostModal({setUpdatePost, post}) {
+
+    const dispatch = useDispatch();
 
     const [title, setTitle] = useState(post.title);
     const [description, setDescription] = useState(post.description);
@@ -16,8 +20,11 @@ export default function UpdatePostModal({setUpdatePost, post}) {
         if(description.trim() === "") return toast.error("Post description is required");
 
 
-        console.log({title, description, category});
-    }; 
+        // console.log({title, description, category});
+
+        dispatch(updatePost(post?._id, {title, category, description})); // عشان بدي ابعت ال id تبع البوست و البيانات الجديدة
+        setUpdatePost(false); // close the modal
+    };
 
     return (
         <div className="update-post">

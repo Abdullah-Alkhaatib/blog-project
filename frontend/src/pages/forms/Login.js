@@ -1,7 +1,7 @@
 import {Link} from "react-router-dom"
 import "./form.css"
 import { useState } from "react";
-import {toast, ToastContainer} from "react-toastify";
+import {toast} from "react-toastify";
 import { useDispatch } from "react-redux";
 import { loginUser } from "../../redux/apiCalls/authApiCall";
 
@@ -31,7 +31,7 @@ export default function Login(){
 
             <h1 className="form-title">Login to your account</h1>
 
-            <ToastContainer position="top-right" autoClose={3000} />
+            {/* <ToastContainer position="top-right" autoClose={3000} /> */}
 
             <form className="form" onSubmit={formSubmitHandler}>
 

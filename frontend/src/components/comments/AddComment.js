@@ -1,6 +1,6 @@
 import "./add-comment.css"
 import { useState } from "react";
-import {toast, ToastContainer} from "react-toastify";
+import {toast} from "react-toastify";
 
 export default function AddComment() {
 
@@ -19,7 +19,7 @@ export default function AddComment() {
 
     return (
         <form className="add-comment" onSubmit={formSubmitHandler}>
-            <ToastContainer theme="light" position="top-right" />
+            {/* <ToastContainer theme="light" position="top-right" /> */}
             <input 
             type="text" 
             placeholder="Add a comment..." 

@@ -1,21 +1,40 @@
 import { useEffect } from "react";
 import PostList from "../../components/posts/PostList";
-import { posts } from "../../dummyData";
 import "./category.css";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchPostsBasedOnCategory } from "../../redux/apiCalls/postApiCall";
+
 
 export default function Category() {
 
-    const { category } = useParams();
+    const dispatch = useDispatch();
+    const {postsCat} = useSelector(state => state.post);
+
+    const { category } = useParams(); // Get the category from the URL
 
     useEffect(() => {
+        dispatch(fetchPostsBasedOnCategory(category));
         window.scrollTo(0, 0);
-    }, [category]);
+    }, [dispatch, category]);
 
     return (
         <section className="category">
-            <h1 className="category-title">Posts based on {category}</h1>
-            <PostList posts={posts} />
+            {postsCat.length === 0 ?
+            <>
+                <h1 className="category-not-found">
+                    Posts with <span>{category}</span> Category not found
+                </h1>
+                <Link className="category-not-found-link" to="/posts">
+                    Go to posts page
+                </Link>
+            </>
+            :
+            <>
+                <h1 className="category-title">Posts based on {category}</h1>
+                <PostList posts={postsCat} />
+            </>
+            }
         </section>
     );
 }

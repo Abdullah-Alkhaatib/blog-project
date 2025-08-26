@@ -1,6 +1,6 @@
 import "./form.css"
 import { useState } from "react";
-import {toast, ToastContainer} from "react-toastify";
+import {toast} from "react-toastify";
 
 export default function ForgotPassword(){
 
@@ -20,7 +20,7 @@ export default function ForgotPassword(){
 
             <h1 className="form-title">Forget Password</h1>
 
-            <ToastContainer position="top-right" autoClose={3000} />
+            {/* <ToastContainer position="top-right" autoClose={3000} /> */}
 
             <form className="form" onSubmit={formSubmitHandler}>
 

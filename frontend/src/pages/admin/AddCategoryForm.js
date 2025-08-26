@@ -1,5 +1,5 @@
 import { useState } from "react";
-import {toast, ToastContainer} from "react-toastify";
+import {toast} from "react-toastify";
 
 export default function AddCategoryForm(){
 
@@ -19,7 +19,7 @@ export default function AddCategoryForm(){
             <h6 className="add-category-title">Add New Category</h6>
 
             <form onSubmit={formSubmitHandler}>
-                <ToastContainer autoClose={3000} theme="light" position="top-right" />
+                {/* <ToastContainer autoClose={3000} theme="light" position="top-right" /> */}
                 <div className="add-category-form-group">
                     <label htmlFor="title">Category Title</label>
                     <input 

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import PostList from "../../components/posts/PostList";
 import { posts } from "../../dummyData";
 import "./profile.css";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import swal from "sweetalert";
 import UpdateProfileModal from "../posts-page/UpdateProfileModal";
 import {useDispatch, useSelector} from "react-redux";
@@ -71,7 +71,7 @@ export default function Profile() {
                     />
 
                     <form onSubmit={formSubmitHandler}>
-                        <ToastContainer autoClose={3000} position="top-center" />
+                        {/* <ToastContainer autoClose={3000} position="top-center" /> */}
                         <abbr title="choose profile photo">
                             <label 
                             htmlFor="file" 
