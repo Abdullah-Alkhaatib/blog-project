@@ -4,30 +4,38 @@ import swal from "sweetalert"; //npm install sweetalert
 import UpdateCommentModal from "./UpdateCommentModal";
 import Moment from "react-moment"; // npm i react-moment
 import {useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { deleteComment } from "../../redux/apiCalls/commentApiCall";
 
 export default function CommentList({ comments }) {
+
+    const dispatch = useDispatch();
 
     const {user} = useSelector(state => state.auth);
 
     const [updateComment, setUpdateComment] = useState(false);
+    const [commentForUpdate, setCommentForUpdate] = useState(null);
+
+    // Update comment handler
+    const updateCommentHandler = (comment) => {
+        setCommentForUpdate(comment); 
+        setUpdateComment(true); // رح يفتح المودال
+    }
 
     // Delete comment handler
-    const deleteCommentHandler = () => {
+    const deleteCommentHandler = (commentId) => {
         swal({
             title: "Are you sure?",
-            text: "Once deleted, you will not be able to recover this imaginary file!",
+            text: "Once deleted, you will not be able to recover this comment!",
             icon: "warning",
             buttons: true,
             dangerMode: true,
             })
-        .then((willDelete) => {
-            if (willDelete) {
-                swal("Comment has been deleted!", {
-                    icon: "success",
-                });
-            } else {
-                swal("Your comment is safe!");
-            }
+        .then((isOk) => {
+            if (isOk) {
+                // Call delete comment API
+                dispatch(deleteComment(commentId)); 
+            } 
         });
     }
 
@@ -55,15 +63,31 @@ export default function CommentList({ comments }) {
 
                     {user?._id === comment.user && (
                         <div className="comment-item-icon-wrapper">
-                            <i onClick={() => setUpdateComment(true)} className="bi bi-pencil-square"></i>
-                            <i onClick={deleteCommentHandler} className="bi bi-trash-fill"></i>
+
+                            <i 
+                            onClick={() => updateCommentHandler(comment)} 
+                            className="bi bi-pencil-square"
+                            >
+
+                            </i>
+                            <i
+                            onClick={() => deleteCommentHandler(comment?._id)} 
+                            className="bi bi-trash-fill"
+                            >
+                            </i>
+
                         </div>
                     )}
 
                 </div>
             ))}
 
-            { updateComment && <UpdateCommentModal setUpdateComment={setUpdateComment} />}
+            { updateComment && (
+                <UpdateCommentModal 
+                commentForUpdate={commentForUpdate} 
+                setUpdateComment={setUpdateComment} 
+                />
+            )}
 
         </div>
     );

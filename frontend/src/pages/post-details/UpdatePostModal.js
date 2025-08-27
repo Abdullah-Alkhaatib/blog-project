@@ -1,12 +1,14 @@
 import "./update-post.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {toast} from "react-toastify";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import { updatePost } from "../../redux/apiCalls/postApiCall";
+import { fetchCategories } from "../../redux/apiCalls/categoryApiCall";
 
 export default function UpdatePostModal({setUpdatePost, post}) {
 
     const dispatch = useDispatch();
+    const {categories} = useSelector((state) => state.category);
 
     const [title, setTitle] = useState(post.title);
     const [description, setDescription] = useState(post.description);
@@ -25,6 +27,10 @@ export default function UpdatePostModal({setUpdatePost, post}) {
         dispatch(updatePost(post?._id, {title, category, description})); // عشان بدي ابعت ال id تبع البوست و البيانات الجديدة
         setUpdatePost(false); // close the modal
     };
+
+    useEffect(() => {
+        dispatch(fetchCategories());
+    }, [dispatch]);
 
     return (
         <div className="update-post">
@@ -47,8 +53,11 @@ export default function UpdatePostModal({setUpdatePost, post}) {
                 onChange={(e) => setCategory(e.target.value)}
                 >
                     <option disabled value="">Select A Category</option>
-                    <option value="music">Music</option>
-                    <option value="travelling">Travelling</option>
+                    {categories.map(category => (
+                        <option key={category._id} value={category.title}>
+                            {category.title}
+                        </option>
+                    ))}
                 </select>
                 <textarea 
                 className="update-post-textarea"

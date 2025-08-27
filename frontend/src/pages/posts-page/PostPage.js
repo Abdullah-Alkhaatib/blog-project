@@ -1,7 +1,6 @@
 import "./posts-page.css"
 import PostList from "../../components/posts/PostList"
 import SideBar from "../../components/sidebar/SideBar"
-import {categories} from "../../dummyData"
 import Pagination from "../../components/pagination/Pagination"
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -30,7 +29,7 @@ export default function PostPage(){
         <>
             <section className="posts-page">
                 <PostList posts={posts} />
-                <SideBar categories={categories} />
+                <SideBar />
             </section>
             <Pagination pages={pages} currentPage={currentPage} setCurrentPage={setCurrentPage} />
         </>

@@ -41,6 +41,18 @@ const postSlice = createSlice({
         },
         deletePost(state, action){
             state.posts = state.posts.filter(p => p._id !== action.payload); // حذف البوست من القائمة
+        },
+        addCommentToPost(state, action){
+            // action.payload => نيو بوست نضيفه على كومينتس اراي
+            state.post.comments.push(action.payload); // إضافة التعليق إلى البوست الحالي
+        },
+        updateCommentPost(state, action){
+            state.post.comments = state.post.comments.map(comment => 
+                comment._id === action.payload._id ? action.payload : comment
+            )
+        },
+        deleteCommentFromPost(state, action){
+            state.post.comments = state.post.comments.filter(comment => comment._id !== action.payload);
         }
     }
 });

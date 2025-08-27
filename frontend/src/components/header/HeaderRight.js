@@ -15,6 +15,7 @@ export default function HeaderRight({toggle, setToggle}) {
     const logoutHandler = () => {
         setDropdownOpen(false);
         dispatch(logoutUser());
+        window.location.href = "/"; // Redirect to home page after logout
     };
 
     return (

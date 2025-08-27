@@ -5,11 +5,13 @@ import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
 import { createNewPost } from "../../redux/apiCalls/postApiCall";
 import {RotatingLines} from "react-loader-spinner"; // npm install react-loader-spinner --save
+import { fetchCategories } from "../../redux/apiCalls/categoryApiCall";
 
 export default function CreatePost(){
 
     const dispatch = useDispatch();
     const {isPostCreated, loading} = useSelector((state) => state.post);
+    const {categories} = useSelector((state) => state.category);
 
     const [title, setTitle] = useState("");
     const [category, setCategory] = useState("");
@@ -45,6 +47,10 @@ export default function CreatePost(){
         }        
     }, [isPostCreated, navigate])
 
+    useEffect(() => {
+        dispatch(fetchCategories());
+    }, [dispatch]);
+
     return(
         <section className="create-post">
             {/* <ToastContainer position="top-right" autoClose={3000} theme="light" /> */}
@@ -66,8 +72,11 @@ export default function CreatePost(){
                 onChange={(e) => setCategory(e.target.value)}
                 >
                     <option disabled value="">Select a category</option>
-                    <option value="music">Music</option>
-                    <option value="coffee">Coffee</option>
+                    {categories.map(category => (
+                        <option key={category._id} value={category.title}>
+                            {category.title}
+                        </option>
+                    ))}
                 </select>
 
                 <textarea 

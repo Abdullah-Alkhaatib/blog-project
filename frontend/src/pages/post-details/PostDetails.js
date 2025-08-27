@@ -56,7 +56,8 @@ export default function PostDetails() {
         .then((isOk) => {
             if (isOk) {
                 dispatch(deletePost(post?._id));
-                navigate(`/profile/${user?._id}`);
+                // navigate(`/profile/${user?._id}`);
+                navigate(-1); // ارجع للصفحة السابقة
             }
         });
     }
@@ -128,7 +129,9 @@ export default function PostDetails() {
 
             </div>
 
-            <AddComment />
+            {user ? <AddComment postId={post?._id} />
+             : 
+            <p className="post-details-info-write">to write a comment you should login first</p>}
 
             <CommentList comments = {post?.comments} />
 
