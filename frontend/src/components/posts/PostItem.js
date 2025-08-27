@@ -1,6 +1,9 @@
 import {Link} from "react-router-dom";
 
-export default function PostItem({ post }) {
+export default function PostItem({ post, username, userId }) {
+
+    const profileLink = userId ? `/profile/${userId}` : `/profile/${post.user?._id}`;
+
     return (
         <div className="post-item">
 
@@ -15,9 +18,9 @@ export default function PostItem({ post }) {
                         <strong>Author: </strong>
                         <Link
                         className="post-item-username"
-                        to={`/profile/${post.user?._id}`}
+                        to={profileLink}
                         >
-                        {post.user?.username}
+                        {username ? username :post?.user.username}
                         </Link>
                     </div>
 
@@ -34,14 +37,6 @@ export default function PostItem({ post }) {
 
                 <p className="post-item-description">
                     {post?.description}
-                    lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                    lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                    lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                    lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                    lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                    lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                    lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                    lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                 </p>
 
                 <Link className="post-item-link" to={`/posts/details/${post?._id}`}>

@@ -105,8 +105,6 @@ export default function PostDetails() {
 
             <p className="post-details-description">
                 {post?.description}
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
             </p>
 
             <div className="post-details-icon-wrapper">
