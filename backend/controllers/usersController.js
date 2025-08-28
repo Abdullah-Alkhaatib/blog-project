@@ -152,7 +152,9 @@ const deleteUserProfileCtrl = asyncHandler(async (req, res) => {
     }
 
     // 5. Delete the profile picture from cloudinary
-    await cloudinaryRemoveImage(user.profilePhoto.publicId);
+    if(user.profilePhoto.publicId !== null){
+        await cloudinaryRemoveImage(user.profilePhoto.publicId);
+    }
 
     // @TODO - 6. Delete user posts and comments
     await Post.deleteMany({user: req.params.id}); // حذف جميع المشاركات التي تخص هذا المستخدم

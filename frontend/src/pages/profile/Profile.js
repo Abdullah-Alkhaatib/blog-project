@@ -5,14 +5,16 @@ import { toast } from "react-toastify";
 import swal from "sweetalert";
 import UpdateProfileModal from "../posts-page/UpdateProfileModal";
 import {useDispatch, useSelector} from "react-redux";
-import { getUserProfile, uploadProfilePhoto } from "../../redux/apiCalls/profileApiCall";
-import { useParams } from "react-router-dom";
+import { deleteProfile, getUserProfile, uploadProfilePhoto } from "../../redux/apiCalls/profileApiCall";
+import { useParams, useNavigate } from "react-router-dom";
 import PostItem from "../../components/posts/PostItem";
+import {Oval} from "react-loader-spinner";
+import { logoutUser } from "../../redux/apiCalls/authApiCall";
 
 export default function Profile() {
 
     const dispatch = useDispatch();
-    const {profile} = useSelector(state => state.profile);
+    const {profile, isProfileDeleted, loading} = useSelector(state => state.profile);
     const {user} = useSelector(state => state.auth);
 
     const [file, setFile] = useState(null);
@@ -24,6 +26,14 @@ export default function Profile() {
         dispatch(getUserProfile(id))
         window.scrollTo(0, 0);
     }, [dispatch, id]);
+
+    const navigate = useNavigate();
+    useEffect(() => {
+        if (isProfileDeleted) {
+            // toast.success("Profile deleted successfully!");
+            navigate("/");
+        }
+    }, [isProfileDeleted, navigate]);
 
     // Form submit handler
     const formSubmitHandler = (e) => {
@@ -47,15 +57,29 @@ export default function Profile() {
             buttons: true,
             dangerMode: true,
             })
-        .then((willDelete) => {
-            if (willDelete) {
-                swal("Account has been deleted!", {
-                    icon: "success",
-                });
-            } else {
-                swal("Your account is safe!");
-            }
+        .then((isOk) => {
+            if (isOk) {
+                dispatch(deleteProfile(user?._id));
+                dispatch(logoutUser()); // ⬅️ تسجيل خروج المستخدم بعد حذف الحساب
+            } 
         });
+    }
+
+    if(loading){
+        return (
+            <div className="profile-loader">
+                 <Oval
+                 visible={true}
+                 height={120}
+                 width={120}
+                 color="#000"
+                 ariaLabel="oval-loading"
+                 strokeWidth={3}
+                 strokeWidthSecondary={3}
+                 secondaryColor="gray"
+                 />
+            </div>
+        )
     }
 
     return (
@@ -117,7 +141,7 @@ export default function Profile() {
             <div className="profile-posts-list">
                 <h2 className="profile-posts-list-title">{profile?.username} Posts</h2>
                 {/* <PostList posts={posts} /> */}
-                { profile?.posts.map( post => 
+                { profile?.posts?.map( post => 
                     <PostItem 
                     key={post._id} 
                     post={post}

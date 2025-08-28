@@ -71,3 +71,32 @@ export function updateProfile(userId, profile){
         }
     }
 }
+
+
+// Delete profile
+export function deleteProfile(userId){
+    return async (dispatch, getState) => {
+        try {
+            dispatch(profileActions.setLoading());
+
+            const {data} = await axios.delete(`http://localhost:8000/api/users/profile/${userId}`, {
+                headers: {
+                    Authorization: "Bearer " + getState().auth.user.token,
+                }
+            });
+
+            dispatch(profileActions.setIsProfileDeleted()); // تعيين حالة الحذف
+            toast.success(data?.message);
+            setTimeout(() => {
+                dispatch(profileActions.clearIsProfileDeleted());
+            }, 2000);
+
+            // remove user from local storage
+            // localStorage.removeItem("userInfo");
+
+        } catch (error) {
+            toast.error(error.response && error.response.data.message);
+            dispatch(profileActions.clearLoading());
+        }
+    }
+}

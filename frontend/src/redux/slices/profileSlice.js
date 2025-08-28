@@ -3,7 +3,9 @@ import { createSlice } from "@reduxjs/toolkit";
 const profileSlice = createSlice({
     name: "profile",
     initialState: {
-        profile: null
+        profile: null,
+        loading: false,
+        isProfileDeleted: false
     },
     reducers: {
         setProfile(state, action) {
@@ -14,6 +16,19 @@ const profileSlice = createSlice({
         },
         updateProfile(state, action){
             state.profile = action.payload; // تعيين البيانات الجديدة
+        },
+        setLoading(state){
+            state.loading = true; //نعرض "spinner" أو "جاري التحميل...".
+        },
+        clearLoading(state){
+            state.loading = false; //بتوقف التحميل وتخلي القيمة false.
+        },
+        setIsProfileDeleted(state){
+            state.isProfileDeleted = true; // "الملف الشخصي اتـم حذفه" (isProfileDeleted = true)
+            state.loading = false; // إيقاف التحميل
+        },
+        clearIsProfileDeleted(state){
+            state.isProfileDeleted = false; //يعني كأنك "مسحت" حالة الحذف عشان ما تضل موجودة لو رحت على صفحة ثانية أو عملت عملية جديدة
         }
     }
 });
