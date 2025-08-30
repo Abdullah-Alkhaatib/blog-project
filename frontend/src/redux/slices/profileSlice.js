@@ -5,7 +5,9 @@ const profileSlice = createSlice({
     initialState: {
         profile: null,
         loading: false,
-        isProfileDeleted: false
+        isProfileDeleted: false,
+        userCount: null,
+        profiles: []
     },
     reducers: {
         setProfile(state, action) {
@@ -29,7 +31,13 @@ const profileSlice = createSlice({
         },
         clearIsProfileDeleted(state){
             state.isProfileDeleted = false; //يعني كأنك "مسحت" حالة الحذف عشان ما تضل موجودة لو رحت على صفحة ثانية أو عملت عملية جديدة
-        }
+        },
+        setUserCount(state, action) {
+            state.userCount = action.payload;
+        },
+        setProfiles(state, action) {
+            state.profiles = action.payload;
+        },
     }
 });
 

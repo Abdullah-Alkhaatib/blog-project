@@ -1,7 +1,21 @@
 import {Link} from "react-router-dom"
 import AddCategoryForm from "./AddCategoryForm"
+import {useDispatch, useSelector} from "react-redux"
+import { useEffect } from "react";
+import { fetchCategories } from "../../redux/apiCalls/categoryApiCall";
+import { getUsersCount } from "../../redux/apiCalls/profileApiCall";
 
 export default function AdminMain(){
+
+    const dispatch = useDispatch();
+    const {categories} = useSelector(state => state.category);
+    const {userCount} = useSelector(state => state.profile);
+
+    useEffect(() => {
+        dispatch(fetchCategories());
+        dispatch(getUsersCount());
+    },[dispatch]);
+
     return(
         <div className="admin-main">
 
@@ -9,7 +23,9 @@ export default function AdminMain(){
 
                 <div className="admin-main-card">
                     <h5 className="admin-card-title">Users</h5>
-                    <div className="admin-card-count">120</div>
+                    <div className="admin-card-count">
+                        {userCount}
+                    </div>
                     <div className="admin-card-link-wrapper">
                         <Link to="/admin-dashboard/users-table" 
                         className="admin-card-link">
@@ -37,7 +53,9 @@ export default function AdminMain(){
 
                 <div className="admin-main-card">
                     <h5 className="admin-card-title">Categories</h5>
-                    <div className="admin-card-count">10</div>
+                    <div className="admin-card-count">
+                        {categories.length}
+                    </div>
                     <div className="admin-card-link-wrapper">
                         <Link to="/admin-dashboard/categories-table" 
                         className="admin-card-link">

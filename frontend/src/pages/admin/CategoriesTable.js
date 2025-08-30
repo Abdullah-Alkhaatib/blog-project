@@ -1,11 +1,21 @@
 import AdminSidebar from "./AdminSidebar";
 import "./admin-table.css"
 import swal from "sweetalert"; //npm install sweetalert
+import { useDispatch, useSelector } from "react-redux";
+import { deleteCategory, fetchCategories } from "../../redux/apiCalls/categoryApiCall";
+import { useEffect } from "react";
 
 export default function CategoriesTable(){
 
+    const dispatch = useDispatch();
+    const {categories} = useSelector((state) => state.category);
+
+    useEffect(() => {
+        dispatch(fetchCategories());
+    }, [dispatch]);
+
     // Delete category handler
-    const deleteCategoryHandler = () => {
+    const deleteCategoryHandler = (categoryId) => {
         swal({
             title: "Are you sure?",
             text: "Once deleted, you will not be able to recover this category!",
@@ -13,13 +23,10 @@ export default function CategoriesTable(){
             buttons: true,
             dangerMode: true,
             })
-        .then((willDelete) => {
-            if (willDelete) {
-                swal("Category has been deleted!", {
-                    icon: "success",
-                });
-            } else {
-                swal("Your category is safe!");
+        .then((isOk) => {
+            if (isOk) {
+                // Dispatch delete action
+                dispatch(deleteCategory(categoryId));
             }
         });
     }
@@ -43,15 +50,16 @@ export default function CategoriesTable(){
                     </thead>
 
                     <tbody>
-                        {[1,2,3].map((item) => (
-                            <tr key={item}>
-                                <td>{item}</td> {/* Count */}
+                        {categories.map((item, index) => (
+                            <tr key={item._id}>
+                                <td>{index + 1}</td> {/* Count */}
                                 <td>
-                                    <b>music</b>
+                                    <b>{item.title}</b>
                                 </td>
                                 <td> {/* Actions */}
                                     <div className="table-button-group">
-                                        <button onClick={deleteCategoryHandler}>Delete Category</button>
+                                        <button onClick={() => deleteCategoryHandler(item._id)}>
+                                            Delete Category</button>
                                     </div>
                                 </td>
                             </tr>

@@ -63,7 +63,9 @@ const getUserProfileCtrl = asyncHandler(async (req, res) => {
             password: req.body.password,
             bio: req.body.bio
         }
-    }, {new: true}).select("-password"); // new: true => يعني رجعلي اليوزر ابديت بعد التحديث
+    }, {new: true})
+    .select("-password") // new: true => يعني رجعلي اليوزر ابديت بعد التحديث
+    .populate("posts"); // جيب جميع المشاركات الخاصة باليوزر
 
     res.status(200).json(updatedUser);
     

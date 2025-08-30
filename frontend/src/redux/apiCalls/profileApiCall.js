@@ -100,3 +100,41 @@ export function deleteProfile(userId){
         }
     }
 }
+
+
+// Get users count (for admin dashboard)
+export function getUsersCount() {
+    return async (dispatch, getState) => {
+        try {
+            const {data} = await axios.get(`http://localhost:8000/api/users/count`, {
+                headers: {
+                    Authorization: "Bearer " + getState().auth.user.token,
+                }
+            });
+
+            dispatch(profileActions.setUserCount(data));
+
+        } catch (error) {
+            toast.error(error.response && error.response.data.message);
+        }
+    }
+}
+
+
+// Get all users profile (for admin dashboard)
+export function getAllUsersProfile() {
+    return async (dispatch, getState) => {
+        try {
+            const {data} = await axios.get(`http://localhost:8000/api/users/profile`, {
+                headers: {
+                    Authorization: "Bearer " + getState().auth.user.token,
+                }
+            });
+
+            dispatch(profileActions.setProfiles(data));
+
+        } catch (error) {
+            toast.error(error.response && error.response.data.message);
+        }
+    }
+}
