@@ -148,3 +148,17 @@ export function deletePost(postId){
         }
     }
 }
+
+
+
+// Get all posts
+export function getAllPosts(){
+    return async (dispatch) => {
+        try {
+            const {data} = await axios.get(`http://localhost:8000/api/posts`);
+            dispatch(postActions.setPosts(data));
+        } catch (error) {
+            toast.error(error.response && error.response.data.message);
+        }
+    }
+}

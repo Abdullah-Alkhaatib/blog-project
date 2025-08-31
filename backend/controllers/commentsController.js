@@ -23,8 +23,10 @@ const {User} = require("../models/UserModel");
         user: req.user.id, // req.user.id = user id from auth middleware (login)
         username: profile.username 
     });
- 
-    res.status(201).json({comment}); // نرسل الكومينت الى الكلاينت
+
+    const populatedComment = await Comment.findById(comment._id).populate("user", "-password");
+
+    res.status(201).json(populatedComment); // نرسل الكومينت الى الكلاينت
  });
 
 

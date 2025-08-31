@@ -2,12 +2,18 @@ import { Link } from "react-router-dom";
 import AdminSidebar from "./AdminSidebar";
 import "./admin-table.css"
 import swal from "sweetalert"; //npm install sweetalert
-import {posts} from "../../dummyData";
+// import {posts} from "../../dummyData";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { getAllPosts, deletePost } from "../../redux/apiCalls/postApiCall";
 
 export default function PostsTable(){
 
+    const dispatch = useDispatch();
+    const {posts} = useSelector(state => state.post);
+
     // Delete post handler
-    const deletePostHandler = () => {
+    const deletePostHandler = (postId) => {
         swal({
             title: "Are you sure?",
             text: "Once deleted, you will not be able to recover this post!",
@@ -15,16 +21,16 @@ export default function PostsTable(){
             buttons: true,
             dangerMode: true,
             })
-        .then((willDelete) => {
-            if (willDelete) {
-                swal("Post has been deleted!", {
-                    icon: "success",
-                });
-            } else {
-                swal("Your post is safe!");
+        .then((isOk) => {
+            if (isOk) {
+                dispatch(deletePost(postId));
             }
         });
     }
+
+    useEffect(() => {
+        dispatch(getAllPosts()); // fetch all posts
+    }, [dispatch]);
 
     return (
         <div className="table-container">
@@ -51,7 +57,7 @@ export default function PostsTable(){
                                 <td>{index + 1}</td> {/* Count */}
                                 <td>
                                     <div className="table-image">
-                                        <img src="/images/user-avatar.png" 
+                                        <img src={item.user.profilePhoto?.url}
                                         alt="" 
                                         className="table-user-image"
                                         />
@@ -68,7 +74,10 @@ export default function PostsTable(){
                                                 View Post
                                             </Link>
                                         </button>
-                                        <button onClick={deletePostHandler}>Delete Post</button>
+                                        <button 
+                                        onClick={() => deletePostHandler(item._id)}>
+                                            Delete Post
+                                            </button>
                                     </div>
                                 </td>
                             </tr>

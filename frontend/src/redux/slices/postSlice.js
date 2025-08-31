@@ -43,19 +43,23 @@ const postSlice = createSlice({
             state.posts = state.posts.filter(p => p._id !== action.payload); // حذف البوست من القائمة
         },
         addCommentToPost(state, action){
-            // action.payload => نيو بوست نضيفه على كومينتس اراي
-            state.post.comments.push(action.payload); // إضافة التعليق إلى البوست الحالي
+            if (!state.post.comments) state.post.comments = [];
+                state.post.comments.push(action.payload);
         },
         updateCommentPost(state, action){
-            state.post.comments = state.post.comments.map(comment => 
+            if (!state.post?.comments) return;
+            state.post.comments = state.post.comments.map(comment =>
                 comment._id === action.payload._id ? action.payload : comment
-            )
+            );
         },
         deleteCommentFromPost(state, action){
-            state.post.comments = state.post.comments.filter(comment => comment._id !== action.payload);
+            if (!state.post?.comments) return;
+            state.post.comments = state.post.comments.filter(
+                comment => comment._id !== action.payload
+            );
         }
     }
-});
+}); 
 
 const postReducer = postSlice.reducer;
 const postActions = postSlice.actions;

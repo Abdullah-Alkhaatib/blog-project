@@ -47,7 +47,8 @@ export default function CommentList({ comments }) {
 
                     <div className="comment-item-info">
                         <div className="comment-item-username">
-                            {comment.username}
+                            {/* ✅ مرات الـ backend برجع user كـ object (مع username جواه)، ومرات برجع بس id */}
+                            {comment.user?.username || comment.username}
                         </div>
                         <div className="comment-item-time">
                             <Moment fromNow ago>
@@ -61,7 +62,8 @@ export default function CommentList({ comments }) {
                         {comment.text}
                     </p>
 
-                    {user?._id === comment.user && (
+                    {/* {user?._id === comment.user && ( */}
+                    {user?._id === (comment.user?._id || comment.user) && (
                         <div className="comment-item-icon-wrapper">
 
                             <i 

@@ -66,7 +66,7 @@ const {Comment} = require("../models/CommentModel");
             .skip((pageNumber - 1) * POST_PER_PAGE) // تخطي عدد البوستات في الصفحات السابقة
             .limit(POST_PER_PAGE) // تحديد عدد البوستات في الصفحة الحالية
             .sort({createdAt: -1})
-            .populate("user", ["-password"]); 
+            .populate("user", ["-password"]); //populate يعني مرجع من مكان معين؟
     } else if(category){
         posts = await Post.find({category}).sort({createdAt: -1}) // 127.0.0.1:8000/api/posts/?category=music
             .populate("user", ["-password"]); 

@@ -46,6 +46,7 @@ export function deleteComment(commentId){
                 }
             });
             dispatch(postActions.deleteCommentFromPost(commentId)); // حذف التعليق من البوست الحالي
+            // toast.success("Comment deleted successfully");
         } catch (error) {
             toast.error(error.response && error.response.data.message);
         }
