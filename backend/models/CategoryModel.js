@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const Joi = require("joi");
 
+// Category schema
 const categorySchema = new mongoose.Schema({
     user: {
             type: mongoose.Schema.Types.ObjectId,

@@ -1,6 +1,7 @@
 import {postActions} from "../slices/postSlice";
 import axios from "axios";
 import {toast} from "react-toastify";
+import { commentActions } from "../slices/commentSlice";
 
 // Create comment
 export function createComment(newComment){
@@ -28,7 +29,8 @@ export function updateComment( commentId, comment){
                     Authorization: "Bearer " + getState().auth.user.token,
                 }
             });
-            dispatch(postActions.updateCommentPost(data)); // تحديث التعليق في البوست الحالي
+            // .updatedComment لانه هيك اسمها ب backend
+            dispatch(postActions.updateCommentPost(data.updatedComment)); // تحديث التعليق في البوست الحالي
         } catch (error) {
             toast.error(error.response && error.response.data.message);
         }
@@ -45,8 +47,27 @@ export function deleteComment(commentId){
                     Authorization: "Bearer " + getState().auth.user.token,
                 }
             });
+            dispatch(commentActions.deleteComment(commentId)); // حذف التعليق من قائمة التعليقات العامة
             dispatch(postActions.deleteCommentFromPost(commentId)); // حذف التعليق من البوست الحالي
             // toast.success("Comment deleted successfully");
+        } catch (error) {
+            toast.error(error.response && error.response.data.message);
+        }
+    }
+}
+
+
+
+// Fetch all comments
+export function fetchAllComments(){
+    return async (dispatch, getState) => {
+        try {
+            const {data} = await axios.get(`http://localhost:8000/api/comments`, {
+                headers: {
+                    Authorization: "Bearer " + getState().auth.user.token,
+                }
+            });
+            dispatch(commentActions.setComments(data.comments)); // تحديث قائمة التعليقات
         } catch (error) {
             toast.error(error.response && error.response.data.message);
         }

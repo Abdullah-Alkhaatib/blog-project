@@ -7,7 +7,8 @@ const authSlice = createSlice({
     initialState: {
         user: localStorage.getItem("userInfo") ? JSON.parse(localStorage.getItem("userInfo")) : null,
 
-        registerMessage: null // to show message after register (success or error)
+        registerMessage: null, // to show message after register (success or error)
+        isEmailVerified: false,
     },
     reducers: {
         login(state, action){
@@ -28,6 +29,10 @@ const authSlice = createSlice({
         },
         setBio(state, action) {
             state.user.bio = action.payload;
+        },
+        setIsEmailVerified(state) {
+            state.isEmailVerified = true;
+            state.registerMessage = null; // حذف رسالة التسجيل
         },
     }
 });

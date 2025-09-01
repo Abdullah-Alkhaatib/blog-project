@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom"
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {logoutUser} from "../../redux/apiCalls/authApiCall";
 
@@ -12,6 +12,22 @@ export default function HeaderRight({toggle, setToggle}) {
 
     const dispatch = useDispatch();
 
+      // ⬅️ مرجع للـ dropdown
+    const dropdownRef = useRef(null);
+
+      useEffect(() => {
+        const handleClickOutside = (event) => {
+            // اذا الكبسة صارت برة الـ dropdown => سكّره
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+                setDropdownOpen(false);
+            }
+        };
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, []);
+
     const logoutHandler = () => {
         setDropdownOpen(false);
         dispatch(logoutUser());
@@ -22,8 +38,10 @@ export default function HeaderRight({toggle, setToggle}) {
         <div className="header-right">
             {user ? (
                 <>
-                    <div className="header-right-user-info">
-                        <span onClick={() => setDropdownOpen(!dropdownOpen)} className="header-right-username">
+                    <div className="header-right-user-info" ref={dropdownRef}>
+                        <span 
+                        onClick={() => setDropdownOpen(!dropdownOpen)} 
+                        className="header-right-username">
                             {user?.username}
                         </span>
                         <img src={user?.profilePhoto.url}

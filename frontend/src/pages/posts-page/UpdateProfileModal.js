@@ -9,7 +9,7 @@ export default function UpdateProfileModal({setUpdateProfile, profile}) {
 
     const [username, setUsername] = useState(profile.username);
     const [bio, setBio] = useState(profile.bio);
-    const [password, setPassword] = useState("");
+    const [newPassword, setNewPassword] = useState("");
 
     // Form submit handler
     const formSubmitHandler = (e) => {
@@ -17,8 +17,8 @@ export default function UpdateProfileModal({setUpdateProfile, profile}) {
         
         const updatedUser = {username, bio}
 
-        if(password.trim() !== ""){
-            updatedUser.password = password; // اضافة كلمة المرور
+        if(newPassword.trim() !== ""){
+            updatedUser.password = newPassword; // اضافة كلمة المرور
         }
 
         // console.log(updatedUser);
@@ -52,9 +52,9 @@ export default function UpdateProfileModal({setUpdateProfile, profile}) {
                 <input 
                 type="password" 
                 className="update-profile-input" 
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                placeholder="New Password"
+                value={newPassword}
+                onChange={(e) => setNewPassword(e.target.value)}
                 />
                 <button className="update-profile-btn" type="submit">Update Profile</button>
             </form>

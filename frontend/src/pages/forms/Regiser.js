@@ -38,7 +38,7 @@ export default function Register(){
         }).then(isOk => {
             if(isOk){
                 // go to login page
-                navigate("/login");
+                // navigate("/login");
             }
         })
     }

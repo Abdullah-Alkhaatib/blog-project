@@ -56,7 +56,7 @@ export function updateProfile(userId, profile){
                 }
             });
 
-            dispatch(profileActions.updateProfile(data.profile)); // data => اللي ب res.status(200)
+            dispatch(profileActions.updateProfile(data)); // data => اللي ب res.status(200)
             dispatch(authActions.setUsername(data.username));
             dispatch(authActions.setBio(data.bio));
 

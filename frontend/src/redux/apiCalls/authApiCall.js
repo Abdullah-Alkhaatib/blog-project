@@ -47,3 +47,17 @@ export function registerUser(user){
         }
     }
 }
+
+
+// Verify email
+export function verifyEmail(userId, token){
+    return async (dispatch) => {
+        try {
+            await axios.get(`http://localhost:8000/api/auth/${userId}/verify/${token}`);
+            dispatch(authActions.setIsEmailVerified());
+        } catch (error) {
+            // toast.error(error.response && error.response.data.message);
+            console.log(error);
+        }
+    }
+}
