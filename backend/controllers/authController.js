@@ -11,7 +11,7 @@ const sendEmail = require("../utils/sendEmail");
  * @desc    Register a new user
  * @route   /api/auth/register
  * @method  POST
- * @access  Public
+ * @access  public
  ---------------------------------------------*/
 
  const registerUserCtrl = asyncHandler(async (req, res) => {
@@ -49,7 +49,7 @@ const sendEmail = require("../utils/sendEmail");
     await verificationToken.save();
 
     // Making the link
-    const link = `http://localhost:3000/users/${user._id}/verify/${verificationToken.token}`;
+    const link = `${process.env.CLIENT_URL}/users/${user._id}/verify/${verificationToken.token}`;
 
     // Putting the link into an html template
     const htmlTemplate = `
@@ -69,7 +69,7 @@ const sendEmail = require("../utils/sendEmail");
  * @desc    Login User
  * @route   /api/auth/login
  * @method  POST
- * @access  Public
+ * @access  public
  ---------------------------------------------*/    
  const loginUserCtrl = asyncHandler(async (req, res) => {
     // validation (في userModel)
@@ -103,8 +103,8 @@ const sendEmail = require("../utils/sendEmail");
             await verificationToken.save();
         }
 
-        const link = `http://localhost:3000/users/${user._id}/verify/${verificationToken.token}`;
-    
+        const link = `${process.env.CLIENT_URL}/users/${user._id}/verify/${verificationToken.token}`;
+
         const htmlTemplate = `
             <p>Click on the link below to verify your email:</p>
             <a href="${link}">Verify</a>
@@ -137,7 +137,7 @@ const sendEmail = require("../utils/sendEmail");
  * @desc    Verify User Account
  * @route   /api/auth/:userId/verify/:token
  * @method  GET
- * @access  Public
+ * @access  public
  ---------------------------------------------*/
  const verifyUserAccountCtrl = asyncHandler(async (req, res) => {
     const {userId, token} = req.params;    

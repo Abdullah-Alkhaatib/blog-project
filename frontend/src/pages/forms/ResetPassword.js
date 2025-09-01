@@ -18,7 +18,7 @@ export default function ResetPassword(){
     return(
         <section className="form-container">
 
-            <h1 className="form-title">Reset your password</h1>
+            <h1 className="form-title">Reset Password</h1>
 
             {/* <ToastContainer position="top-right" autoClose={3000} /> */}
 

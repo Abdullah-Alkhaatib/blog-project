@@ -52,7 +52,7 @@ export default function UpdateProfileModal({setUpdateProfile, profile}) {
                 <input 
                 type="password" 
                 className="update-profile-input" 
-                placeholder="New Password"
+                placeholder="Password"
                 value={newPassword}
                 onChange={(e) => setNewPassword(e.target.value)}
                 />
