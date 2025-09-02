@@ -68,19 +68,19 @@ function validateUpdateUser(user){
 }
 
 // Validate Email
-function validateEmail(email){
+function validateEmail(user){
     const schema = joi.object({
         email: joi.string().trim().min(5).max(100).required().email(),
     });
-    return schema.validate({ email });
+    return schema.validate(user);
 }
 
 // Validate new password
-function validateNewPassword(password){
+function validateNewPassword(user){
     const schema = joi.object({
         password: joi.string().trim().min(8).required(),
     });
-    return schema.validate({ password });
+    return schema.validate(user);
 }
 
 module.exports = {

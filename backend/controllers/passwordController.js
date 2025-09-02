@@ -32,7 +32,8 @@ const sendEmail = require("../utils/sendEmail");
         verificationToken = new VerificationToken({
             userId: user._id,
             token: crypto.randomBytes(32).toString("hex"),
-        })
+        });
+        await verificationToken.save();
     }
 
     // 4. Creating link
@@ -92,9 +93,9 @@ const sendEmail = require("../utils/sendEmail");
     const { userId, token } = req.params;
 
     // 1. Validation
-    const { e } = validateEmail(req.body);
-    if(e){
-        return res.status(400).json({message: e.details[0].message});
+    const { error } = validateNewPassword(req.body);
+    if(error){
+        return res.status(400).json({message: error.details[0].message});
     }
 
     // 2. Find the user by ID
@@ -117,6 +118,7 @@ const sendEmail = require("../utils/sendEmail");
     }
 
     // 5. Hash the new password
+    const { password: newPassword } = req.body;
     const hashedPassword = await bcrypt.hash(newPassword, 10);
 
     // 6. Update the user's password
