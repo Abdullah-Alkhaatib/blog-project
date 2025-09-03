@@ -20,7 +20,7 @@ export default function PostItem({ post, username, userId }) {
                         className="post-item-username"
                         to={profileLink}
                         >
-                        {username ? username :post?.user.username}
+                        {username ? username : post?.user?.username || "Unknown User"}
                         </Link>
                     </div>
 

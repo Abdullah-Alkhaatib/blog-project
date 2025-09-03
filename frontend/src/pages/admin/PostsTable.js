@@ -57,12 +57,12 @@ export default function PostsTable(){
                                 <td>{index + 1}</td> {/* Count */}
                                 <td>
                                     <div className="table-image">
-                                        <img src={item.user.profilePhoto?.url}
+                                        <img src={item.user?.profilePhoto?.url || "https://static.vecteezy.com/system/resources/previews/036/280/650/non_2x/default-avatar-profile-icon-social-media-user-image-gray-avatar-icon-blank-profile-silhouette-illustration-vector.jpg"}
                                         alt="" 
                                         className="table-user-image"
                                         />
                                         <span className="table-username">
-                                            {item.user.username}
+                                            {item.user?.username || "Unknown User"}
                                         </span>
                                     </div>
                                 </td>

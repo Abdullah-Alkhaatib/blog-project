@@ -27,6 +27,10 @@ export default function ResetPassword(){
         // console.log({ password });
 
         dispatch(resetPassword(password, {userId, token})); // عشان data اللي ب resetPassword 
+
+        setPassword("");
+
+        // window.location.href = "/login"; // Redirect to login page after password reset
     }
 
     return(
