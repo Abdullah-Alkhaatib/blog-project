@@ -1,5 +1,6 @@
 const express = require('express');
 const connectToDB = require("./config/connectToDB");
+const xxs = require("xss-clean"); // في backend, npm install xss-clean
 const {errorHandler, notFound} = require("./middlewares/error");
 const cors = require("cors");
 require("dotenv").config(); // Load environment variables from .env file
@@ -13,6 +14,11 @@ const app = express();
 // Middleware
 app.use(express.json()); // // لتحويل بيانات JSON القادمة في الطلب إلى كائنات JavaScript داخل req.body
 // app.use(express.urlencoded({ extended: true }));
+
+// حماية ضد هجمات XSS (فوق الراوتس لازم)
+// Prevent XSS (cross site scripting) Attacks
+app.use(xxs());
+
 
 // Cors policy
 app.use(cors({
