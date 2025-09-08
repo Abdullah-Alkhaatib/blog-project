@@ -1,6 +1,7 @@
 import {authActions} from "../slices/authSlices";
 import axios from "axios";
 import {toast} from "react-toastify";
+// import {toast} from "react-hot-toast"
 
 // Login user
 export function loginUser(user){

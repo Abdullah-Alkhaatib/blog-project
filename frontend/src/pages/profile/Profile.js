@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 // import PostList from "../../components/posts/PostList";
 import "./profile.css";
 import { toast } from "react-toastify";
+// import {toast} from "react-hot-toast"
 import swal from "sweetalert";
 import UpdateProfileModal from "../posts-page/UpdateProfileModal";
 import {useDispatch, useSelector} from "react-redux";

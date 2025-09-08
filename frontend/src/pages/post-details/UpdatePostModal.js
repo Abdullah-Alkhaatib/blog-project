@@ -1,6 +1,7 @@
 import "./update-post.css";
 import { useState, useEffect } from "react";
 import {toast} from "react-toastify";
+// import {toast} from "react-hot-toast"
 import {useDispatch, useSelector} from "react-redux";
 import { updatePost } from "../../redux/apiCalls/postApiCall";
 import { fetchCategories } from "../../redux/apiCalls/categoryApiCall";

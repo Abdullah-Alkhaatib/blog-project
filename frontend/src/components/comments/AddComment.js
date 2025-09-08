@@ -2,6 +2,7 @@ import "./add-comment.css"
 import { useState } from "react";
 import {toast} from "react-toastify";
 import {useDispatch} from "react-redux";
+// import {toast} from "react-hot-toast"
 import { createComment } from "../../redux/apiCalls/commentApiCall";
 
 export default function AddComment({postId}) {

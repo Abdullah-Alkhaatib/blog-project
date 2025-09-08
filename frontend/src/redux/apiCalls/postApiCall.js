@@ -1,6 +1,7 @@
 import {postActions} from "../slices/postSlice";
 import axios from "axios";
 import {toast} from "react-toastify";
+// import {toast} from "react-hot-toast"
 
 // Fetch posts based on page number
 export function fetchPosts(pageNumber){

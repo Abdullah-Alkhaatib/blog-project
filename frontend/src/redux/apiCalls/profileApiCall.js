@@ -1,6 +1,7 @@
 import {profileActions} from "../slices/profileSlice";
 import axios from "axios";
 import {toast} from "react-toastify";
+// import {toast} from "react-hot-toast"
 import {authActions} from "../slices/authSlices";
 
 // Get user profile

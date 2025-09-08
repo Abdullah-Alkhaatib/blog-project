@@ -2,6 +2,7 @@ import {Link, useNavigate} from "react-router-dom"
 import "./form.css"
 import { useState } from "react";
 import {toast} from "react-toastify";
+// import {toast} from "react-hot-toast"
 import {useDispatch, useSelector} from "react-redux";
 import { registerUser } from "../../redux/apiCalls/authApiCall";
 import swal from "sweetalert";

@@ -3,6 +3,7 @@ import {Link, useParams, useNavigate} from "react-router-dom";
 import "./postDetails.css"
 import { useEffect, useState } from "react";
 import {toast} from "react-toastify";
+// import {toast} from "react-hot-toast";
 import AddComment from "../../components/comments/AddComment";
 import CommentList from "../../components/comments/CommentList";
 import swal from "sweetalert"; //npm install sweetalert

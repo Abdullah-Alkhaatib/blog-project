@@ -1,6 +1,7 @@
 import {categoryActions} from "../slices/categorySlice";
 import axios from "axios";
 import {toast} from "react-toastify";
+// import {toast} from "react-hot-toast"
 
 // Fetch all categories
 export function fetchCategories(){

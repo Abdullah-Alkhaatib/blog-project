@@ -20,6 +20,7 @@ import NotFound from "./pages/not-found/NotFound";
 import { ToastContainer} from "react-toastify";
 import { useSelector } from "react-redux";
 import VerifyEmail from "./pages/verify-email/verifyEmail";
+import {Toaster} from "react-hot-toast";
 
 function App() {
 
@@ -29,7 +30,7 @@ function App() {
     <BrowserRouter>
       <Header />
 
-      <ToastContainer theme="light" position="top-center" autoClose={3000} />
+      <ToastContainer theme="light" position="top-center" autoClose={2000} />
 
       <Routes>
         <Route path="/" element={<Home />} />

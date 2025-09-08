@@ -1,6 +1,7 @@
 import { passwordActions } from "../slices/passwordSlice";
 import axios from "axios";
 import {toast} from "react-toastify";
+// import {toast} from "react-hot-toast"
 
 // Forgot password
 export function forgotPassword(email){

@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import "./create-post.css";
 import {toast} from "react-toastify"; // index.js
+// import {toast} from "react-hot-toast"
 import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
 import { createNewPost } from "../../redux/apiCalls/postApiCall";
